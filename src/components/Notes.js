@@ -3,28 +3,15 @@ require('styles/App.css');
 
 import React from 'react';
 import Note from './Note';
+import Editable from './Editable';
 
-/*let yeomanImage = require('../images/yeoman.png');
-
-class AppComponent extends React.Component {
-  render() {
-    return (
-      <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
-      </div>
-    );
-  }
-}*/
-
-
-/*AppComponent.defaultProps = {
-};
-
-export default AppComponent;*/
-
-export default ({notes,onDelete}) => (
-	<ul>{notes.map(note => 
-		<li key={note.id}><Note task={note.task} onDelete={onDelete}/></li>
-	)}</ul>
+export default ({notes,onDelete=()=>{},onEdit=()=>{},onNoteClick=()=>{}}) => (
+  <ul className="notes">{notes.map(({id,editing,task}) => 
+    <li key={id}>
+      <Note className="note" onClick={onNoteClick.bind(null,id)}>
+        <Editable editing={editing} value={task} onEdit={onEdit.bind(null,id)} />
+        <button className="delete" onClick={onDelete.bind(null,id)}>x</button>
+      </Note>
+    </li>
+  )}</ul>
 )

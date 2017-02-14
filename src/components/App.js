@@ -26,8 +26,8 @@ export default class App extends React.Component {
 
 		return (
 				<div>
-					<button onClick={this.addNote}>add</button>
-					<Notes notes={notes} onDelete={this.deleteNote}/>
+					<button className="add-note" onClick={this.addNote}>+</button>
+					<Notes notes={notes} onDelete={this.deleteNote} onNoteClick={this.activeNoteEdit} onEdit={this.editNote}/>
 				</div>
 		);
 	}
@@ -42,7 +42,40 @@ export default class App extends React.Component {
 		});
 	} 
 
-	deleteNote = () => {
-		console.log('deleteNote');
+	deleteNote = (id,e) => {
+		/*console.log('deleteNote');*/
+		e.stopPropagation();
+
+		this.setState({
+			notes: this.state.notes.filter(note => note.id !== id)
+		});
+	}
+
+	activeNoteEdit = (id) => {
+		// console.log('activeNoteEdit');
+		this.setState({
+			notes: this.state.notes.map(note => {
+				if (note.id == id) {
+					note.editing = true;
+				}
+
+				return note;
+			})
+		});
+	}
+
+	editNote = (id,task) => {
+		// e.stopPropagation();
+		// console.log('editNote');
+		this.setState({
+			notes: this.state.notes.map(note => {
+				if (note.id == id) {
+					note.editing = false;
+					note.task = task;
+				}
+
+				return note;
+			})
+		})
 	}
 }

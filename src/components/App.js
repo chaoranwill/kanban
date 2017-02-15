@@ -1,28 +1,13 @@
 import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
+import connect from '../libs/connect';
+import NoteActions from '../actions/NoteActions';
 
 
-
-export default class App extends React.Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			notes: [
-				{
-					id: uuid.v4(),
-					task: 'learn react'
-				},
-				{
-					id: uuid.v4(),
-					task: 'do laundry'
-				}
-			]
-		};
-	}
-
+class App extends React.Component {
 	render(){
-		const {notes} = this.state;
+		const {notes} = this.props;
 
 		return (
 				<div>
@@ -34,11 +19,9 @@ export default class App extends React.Component {
 
 	addNote = () => {
 		/*console.log('add note');*/
-		this.setState({
-			notes: this.state.notes.concat([{
-				id: uuid.v4(),
-				task: 'new task'
-			}])
+		this.props.NoteActions.create({
+			id: uuid.v4(),
+			task: 'new task'
 		});
 	} 
 
@@ -46,29 +29,31 @@ export default class App extends React.Component {
 		/*console.log('deleteNote');*/
 		e.stopPropagation();
 
-		this.setState({
-			notes: this.state.notes.filter(note => note.id !== id)
-		});
+		/*this.setState({
+			notes: this.props.notes.filter(note => note.id !== id)
+		});*/
+		this.props.NoteActions.delete(id);
 	}
 
 	activeNoteEdit = (id) => {
 		// console.log('activeNoteEdit');
-		this.setState({
-			notes: this.state.notes.map(note => {
+		/*this.setState({
+			notes: this.props.notes.map(note => {
 				if (note.id == id) {
 					note.editing = true;
 				}
 
 				return note;
 			})
-		});
+		});*/
+		this.props.NoteActions.update({id,editing:true});
 	}
 
 	editNote = (id,task) => {
 		// e.stopPropagation();
 		// console.log('editNote');
-		this.setState({
-			notes: this.state.notes.map(note => {
+		/*this.setState({
+			notes: this.props.notes.map(note => {
 				if (note.id == id) {
 					note.editing = false;
 					note.task = task;
@@ -76,6 +61,13 @@ export default class App extends React.Component {
 
 				return note;
 			})
-		})
+		})*/
+		this.props.NoteActions.update({id,task,editing:false});
 	}
 }
+
+export default connect(({ notes }) => ({
+    notes
+}), {
+    NoteActions
+})(App)

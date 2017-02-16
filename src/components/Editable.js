@@ -1,12 +1,6 @@
 import React from 'react';
 import classnames from 'classnames'
 
-/*const Edit = ({onEdit = () => {console.log('edit')},value,...props}) => (
-	<div onClick={onEdit} {...props}>
-		<span>edit: {value}</span>
-	</div>
-);*/
-
 class Edit extends React.Component {
 	render() {
 		const {className,onEdit,value,...props} = this.props;

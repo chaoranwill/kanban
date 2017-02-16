@@ -1,11 +1,11 @@
 import React from 'react';
 import uuid from 'uuid';
-import Notes from './Notes';
 import connect from '../libs/connect';
-import NoteActions from '../actions/NoteActions';
+import Lanes from './Lanes';
+import LaneActions from '../actions/LaneActions';//connect the actions
 
 
-class App extends React.Component {
+/*class App extends React.Component {
 	render(){
 		const {notes} = this.props;
 
@@ -18,7 +18,6 @@ class App extends React.Component {
 	}
 
 	addNote = () => {
-		/*console.log('add note');*/
 		this.props.NoteActions.create({
 			id: uuid.v4(),
 			task: 'new task'
@@ -26,42 +25,15 @@ class App extends React.Component {
 	} 
 
 	deleteNote = (id,e) => {
-		/*console.log('deleteNote');*/
-		e.stopPropagation();
-
-		/*this.setState({
-			notes: this.props.notes.filter(note => note.id !== id)
-		});*/
+		e.stopPropagation();		
 		this.props.NoteActions.delete(id);
 	}
 
 	activeNoteEdit = (id) => {
-		// console.log('activeNoteEdit');
-		/*this.setState({
-			notes: this.props.notes.map(note => {
-				if (note.id == id) {
-					note.editing = true;
-				}
-
-				return note;
-			})
-		});*/
 		this.props.NoteActions.update({id,editing:true});
 	}
 
 	editNote = (id,task) => {
-		// e.stopPropagation();
-		// console.log('editNote');
-		/*this.setState({
-			notes: this.props.notes.map(note => {
-				if (note.id == id) {
-					note.editing = false;
-					note.task = task;
-				}
-
-				return note;
-			})
-		})*/
 		this.props.NoteActions.update({id,task,editing:false});
 	}
 }
@@ -70,4 +42,26 @@ export default connect(({ notes }) => ({
     notes
 }), {
     NoteActions
+})(App)
+*/
+const App = ({LaneActions,lanes}) => {
+	const addLane = () => {
+		LaneActions.create({
+			id: uuid.v4(),
+			name: 'new lane'
+		});
+	};
+
+	return (
+		<div>
+			<button className="add-lane" onClick={addLane}>+</button>
+			<Lanes lanes={lanes} />
+		</div>
+	);
+};
+
+export default connect (({lanes}) => ({
+	lanes
+}),{
+	LaneActions
 })(App)

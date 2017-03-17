@@ -87,8 +87,12 @@ body {
 .add-lane,
 .lane-add-note button {
     cursor: pointer;
-    background-color: #fdfdfd;
-    border: 1px solid #ccc;
+    background-color: #E0DDDD;
+    border: 1px solid #9E9A9A;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 4px;
 }
 
 .lane-delete button {

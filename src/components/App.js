@@ -54,7 +54,7 @@ const App = ({LaneActions,lanes}) => {
 
 	return (
 		<div>
-			<button className="add-lane" onClick={addLane}>+</button>
+			<button className="add-lane" onClick={addLane}>addLane+</button>
 			<Lanes lanes={lanes} />
 		</div>
 	);
